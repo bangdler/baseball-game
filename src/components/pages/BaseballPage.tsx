@@ -4,7 +4,7 @@ import styled from "@emotion/styled";
 import { useBaseballGame } from "../../hooks/useBaseballGame";
 import BaseBallNumber from "../../domain/BaseBallNumber";
 
-const Container = styled.form`
+const Form = styled.form`
   padding: 1rem;
 `;
 
@@ -41,7 +41,7 @@ const BaseballPage = ({}: Props) => {
   };
 
   return (
-    <Container onSubmit={submitHandler}>
+    <Form onSubmit={submitHandler}>
       <Title>⚾️ 숫자 야구 게임</Title>
       <Description>1~9까지의 수를 중복없이 3개 입력해주세요.</Description>
       <input type="text" ref={inputRef} />
@@ -55,7 +55,7 @@ const BaseballPage = ({}: Props) => {
       <button onClick={resetGame} disabled={!lastInput?.isAnswer}>
         초기화
       </button>
-    </Container>
+    </Form>
   );
 };
 
