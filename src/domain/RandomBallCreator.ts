@@ -1,7 +1,7 @@
 import { TBaseBallNumber } from "./BaseBallNumber";
 
 export default class RandomBallCreator {
-  static createRandomBalls(): TBaseBallNumber {
+  static createRandomBalls(): number[] {
     const ballNumbers: number[] = [];
     while (ballNumbers.length < 3) {
       const randomNumber = Math.floor(Math.random() * 9) + 1;
@@ -9,6 +9,6 @@ export default class RandomBallCreator {
         ballNumbers.push(randomNumber);
       }
     }
-    return ballNumbers as TBaseBallNumber;
+    return ballNumbers;
   }
 }
