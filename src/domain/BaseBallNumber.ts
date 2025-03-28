@@ -36,4 +36,8 @@ export default class BaseBallNumber {
 
     return validate ? { result: true } : { result: false, message };
   }
+
+  isEqual(input: BaseBallNumber) {
+    return this.numbers.every((num, i) => num === input.numbers[i]);
+  }
 }

@@ -3,7 +3,7 @@ import { BaseBallGameStore } from "../state/RecoilSampleState";
 
 export const useBaseballGame = () => {
   const [baseballState, setBaseballState] = useRecoilState(BaseBallGameStore);
-  console.log(...baseballState.game.answer);
+  console.log(...baseballState.game.answer.numbers);
 
   const checkAndAddHistory = (input: string) => {
     setBaseballState({
@@ -21,5 +21,6 @@ export const useBaseballGame = () => {
     checkAndAddHistory,
     resetGame,
     history: baseballState.game.history,
+    isEnd: baseballState.game.isEnd(),
   };
 };

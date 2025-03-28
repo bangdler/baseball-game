@@ -5,24 +5,25 @@ export interface IHistoryItem {
   input: TBaseBallNumber;
   strike: number;
   ball: number;
-  isAnswer: boolean;
 }
 
-export interface ICheckResult {
+export interface ICountResult {
   strike: number;
   ball: number;
-  isAnswer: boolean;
 }
 
+export type TProgress = "PLAYING" | "END";
+
 export default class BaseballGame {
-  answer: TBaseBallNumber;
+  answer: BaseBallNumber;
   history: IHistoryItem[];
+  state: TProgress = "PLAYING";
 
   constructor({
-    answer = RandomBallCreator.createRandomBalls(),
+    answer,
     history = [],
   }: {
-    answer?: TBaseBallNumber;
+    answer: BaseBallNumber;
     history?: IHistoryItem[];
   }) {
     this.answer = answer;
@@ -31,26 +32,27 @@ export default class BaseballGame {
 
   run(input: string) {
     const baseballNumber = new BaseBallNumber(input);
-    const checkResult = this.check(baseballNumber);
+    const countResult = this.countBalls(baseballNumber);
     const newHistory = this.addHistory({
       input: baseballNumber.numbers,
-      ...checkResult,
+      ...countResult,
     });
-
-    return new BaseballGame({
+    const newBaseBallGame = new BaseballGame({
       answer: this.answer,
       history: newHistory,
     });
+    newBaseBallGame.checkAnswer(baseballNumber);
+    return newBaseBallGame;
   }
 
-  check(baseballNumber: BaseBallNumber): ICheckResult {
+  countBalls(baseballNumber: BaseBallNumber): ICountResult {
     let strike = 0;
     let ball = 0;
 
     for (let i = 0; i < 3; i++) {
-      if (baseballNumber.numbers[i] === this.answer[i]) {
+      if (baseballNumber.numbers[i] === this.answer.numbers[i]) {
         strike++;
-      } else if (this.answer.includes(baseballNumber.numbers[i])) {
+      } else if (this.answer.numbers.includes(baseballNumber.numbers[i])) {
         ball++;
       }
     }
@@ -58,8 +60,17 @@ export default class BaseballGame {
     return {
       strike,
       ball,
-      isAnswer: strike === 3,
     };
+  }
+
+  checkAnswer(baseballNumber: BaseBallNumber) {
+    if (this.answer.isEqual(baseballNumber)) {
+      this.state = "END";
+    }
+  }
+
+  isEnd() {
+    return this.state === "END";
   }
 
   addHistory(historyItem: IHistoryItem) {
@@ -67,6 +78,10 @@ export default class BaseballGame {
   }
 
   reset() {
-    return new BaseballGame({});
+    return new BaseballGame({
+      answer: new BaseBallNumber(
+        RandomBallCreator.createRandomBalls().join("")
+      ),
+    });
   }
 }

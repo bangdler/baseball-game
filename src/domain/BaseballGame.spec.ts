@@ -3,7 +3,9 @@ import BaseBallNumber from "./BaseBallNumber";
 
 describe("BaseballGame", () => {
   it("BaseballGame 인스턴스 생성 시 answer 프로퍼티에 3개의 랜덤한 숫자 배열을 할당한다.", () => {
-    const baseballGame = new BaseballGame({ answer: [1, 2, 3] });
+    const baseballGame = new BaseballGame({
+      answer: new BaseBallNumber("123"),
+    });
     expect(baseballGame.answer).toHaveLength(3);
   });
 
@@ -37,14 +39,22 @@ describe("BaseballGame", () => {
   it.each(checks)(
     "check 메서드를 통해 입력 숫자와 정답을 비교하여 결과를 반환한다. input: $input",
     (check) => {
-      const baseballGame = new BaseballGame({ answer: [1, 2, 3] });
+      const baseballGame = new BaseballGame(
+        new BaseballGame({
+          answer: new BaseBallNumber("123"),
+        })
+      );
       const input = new BaseBallNumber(check.input);
-      const result = baseballGame.check(input);
+      const result = baseballGame.countBalls(input);
       expect(result).toEqual(check.result);
     }
   );
 
-  let baseballGameForHistory = new BaseballGame({ answer: [1, 2, 3] });
+  let baseballGameForHistory = new BaseballGame(
+    new BaseballGame({
+      answer: new BaseBallNumber("123"),
+    })
+  );
 
   it.each(checks)(
     "run 메서드를 사용하면 history가 추가된 새로운 baseballGame 인스턴스를 반환한다. input: $input",

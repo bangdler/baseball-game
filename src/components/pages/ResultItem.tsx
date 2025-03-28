@@ -1,14 +1,9 @@
-import { ICheckResult } from "../../domain/BaseballGame"
+import { ICountResult } from "../../domain/BaseballGame";
 
- interface Props {
-    checkResult: ICheckResult
- }
-
-
-const ResultItem = ({checkResult}:Props) => {
-
-    
-
-
-    return 
+interface Props {
+  checkResult: ICountResult;
 }
+
+const ResultItem = ({ checkResult }: Props) => {
+  return;
+};
