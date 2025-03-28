@@ -1,18 +1,46 @@
 import BaseBallNumber, { TBaseBallNumber } from "./BaseBallNumber";
 import RandomBallCreator from "./RandomBallCreator";
 
-export interface ICheckResult {
+export interface IHistoryItem {
   input: TBaseBallNumber;
   strike: number;
   ball: number;
   isAnswer: boolean;
 }
 
-export default class BaseballGame {
-  answer: number[];
+export interface ICheckResult {
+  strike: number;
+  ball: number;
+  isAnswer: boolean;
+}
 
-  constructor() {
-    this.answer = RandomBallCreator.createRandomBalls();
+export default class BaseballGame {
+  answer: TBaseBallNumber;
+  history: IHistoryItem[];
+
+  constructor({
+    answer = RandomBallCreator.createRandomBalls(),
+    history = [],
+  }: {
+    answer?: TBaseBallNumber;
+    history?: IHistoryItem[];
+  }) {
+    this.answer = answer;
+    this.history = history;
+  }
+
+  run(input: string) {
+    const baseballNumber = new BaseBallNumber(input);
+    const checkResult = this.check(baseballNumber);
+    const newHistory = this.addHistory({
+      input: baseballNumber.numbers,
+      ...checkResult,
+    });
+
+    return new BaseballGame({
+      answer: this.answer,
+      history: newHistory,
+    });
   }
 
   check(baseballNumber: BaseBallNumber): ICheckResult {
@@ -28,10 +56,17 @@ export default class BaseballGame {
     }
 
     return {
-      input: baseballNumber.numbers,
       strike,
       ball,
       isAnswer: strike === 3,
     };
+  }
+
+  addHistory(historyItem: IHistoryItem) {
+    return [...this.history, historyItem];
+  }
+
+  reset() {
+    return new BaseballGame({});
   }
 }

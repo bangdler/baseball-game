@@ -8,5 +8,5 @@ interface State {
 interface Actions {}
 
 export const sampleZustandStore = create<State & Actions>((set) => ({
-  game: new BaseballGame(),
+  game: new BaseballGame({}),
 }));
