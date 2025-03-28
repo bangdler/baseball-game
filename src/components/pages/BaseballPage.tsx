@@ -36,7 +36,11 @@ const BaseballPage = ({}: Props) => {
       checkAndAddHistory(input);
       inputRef.current.value = "";
     } catch (e: unknown) {
-      console.warn(e);
+      if (e instanceof Error) {
+        alert(e.message);
+      } else {
+        console.error("Unknown error:", e);
+      }
     }
   };
 
