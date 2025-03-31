@@ -33,4 +33,21 @@ describe("BaseBallNumber", () => {
       expect(() => new BaseBallNumber(input)).toThrow(error);
     }
   );
+
+  it("isEqual 메서드 - 같은 BaseballNumber인 경우 true를 반환한다", () => {
+    const baseBallNumber = new BaseBallNumber("123");
+    const baseBallNumber2 = new BaseBallNumber("123");
+    expect(baseBallNumber.isEqual(baseBallNumber2)).toBe(true);
+  });
+
+  const notEqualBaseBallNumbers = ["456", "321", "124", "132", "523"];
+
+  it.each(notEqualBaseBallNumbers)(
+    "isEqual 메서드 - 다른 BaseballNumber인 경우 false를 반환한다. answer: 123, input: %s",
+    (input) => {
+      const baseBallNumber = new BaseBallNumber("123");
+      const baseBallNumber2 = new BaseBallNumber(input);
+      expect(baseBallNumber.isEqual(baseBallNumber2)).toBe(false);
+    }
+  );
 });
