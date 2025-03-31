@@ -1,5 +1,5 @@
-import BaseballGame from "./BaseballGame";
-import BaseBallNumber, { TBaseBallNumber } from "./BaseBallNumber";
+import BaseballGame, { IHistoryItem } from "./BaseballGame";
+import BaseBallNumber from "./BaseBallNumber";
 
 describe("BaseballGame", () => {
   let game: BaseballGame;
@@ -31,8 +31,8 @@ describe("BaseballGame", () => {
   });
 
   it("addHistory 메서드 - 히스토리 추가 기능 확인. 원본 history를 건드리지 않고 새로운 history배열은 반환한다.", () => {
-    const historyItem = {
-      input: [1, 2, 3] as TBaseBallNumber,
+    const historyItem: IHistoryItem = {
+      input: [1, 2, 3],
       strike: 3,
       ball: 0,
     };

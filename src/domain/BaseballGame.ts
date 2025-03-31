@@ -30,7 +30,7 @@ export default class BaseballGame {
     this.history = history;
   }
 
-  run(input: string) {
+  run(input: string): BaseballGame {
     const baseballNumber = new BaseBallNumber(input);
     const countResult = this.countBalls(baseballNumber);
     const newHistory = this.addHistory({
@@ -73,11 +73,11 @@ export default class BaseballGame {
     return this.state === "END";
   }
 
-  addHistory(historyItem: IHistoryItem) {
+  addHistory(historyItem: IHistoryItem): IHistoryItem[] {
     return [...this.history, historyItem];
   }
 
-  reset() {
+  reset(): BaseballGame {
     return new BaseballGame({
       answer: new BaseBallNumber(
         RandomBallCreator.createRandomBalls().join("")
