@@ -24,7 +24,7 @@ export default class BaseballGameManager {
   }
 
   addBaseballGame(username: string): BaseballGameManager {
-    if (this.baseballGames.length >= this.maxUserCount) {
+    if (this.isMaxUserCount()) {
       throw new Error("최대 사용자 수를 초과했습니다.");
     }
 

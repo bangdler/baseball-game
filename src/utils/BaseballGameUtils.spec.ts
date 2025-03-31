@@ -1,5 +1,5 @@
-import { IHistoryItem } from "../domain/BaseballGame";
-import { TBaseBallNumber } from "../domain/BaseBallNumber";
+import BaseballGame, { IHistoryItem } from "../domain/BaseballGame";
+import BaseBallNumber, { TBaseBallNumber } from "../domain/BaseBallNumber";
 import { BaseballGameUtils } from "./BaseballGameUtils";
 
 describe("BaseballGameUtils", () => {
@@ -29,6 +29,24 @@ describe("BaseballGameUtils", () => {
     };
     expect(BaseballGameUtils.makeGameResult(result)).toBe(
       "145 : 1 스트라이크 1 볼"
+    );
+  });
+
+  it("makeGamesInfo - 참여중인 사용자가 없는 경우", () => {
+    const baseballGames: BaseballGame[] = [];
+    expect(BaseballGameUtils.makeGamesInfo(baseballGames)).toBe(
+      "참여중인 사용자가 없습니다."
+    );
+  });
+
+  it("makeGamesInfo - 참여중인 사용자가 있는 경우", () => {
+    const answer: BaseBallNumber = new BaseBallNumber("123");
+    const baseballGames: BaseballGame[] = [
+      new BaseballGame({ username: "user1", answer }),
+      new BaseballGame({ username: "user2", answer }),
+    ];
+    expect(BaseballGameUtils.makeGamesInfo(baseballGames)).toBe(
+      "참여중인 사용자 목록:\nuser1, user2"
     );
   });
 });
