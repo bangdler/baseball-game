@@ -6,7 +6,7 @@ export default class BaseballGameManager {
   maxUserCount: number;
   baseballGames: BaseballGame[];
   commonAnswer: BaseBallNumber;
-  currentGameIdx: number;
+  activeGameIdx: number;
 
   constructor({
     maxUserCount,
@@ -14,17 +14,17 @@ export default class BaseballGameManager {
     commonAnswer = new BaseBallNumber(
       RandomBallCreator.createRandomBalls().join("")
     ),
-    currentGameIdx = 0,
+    activeGameIdx = 0,
   }: {
     maxUserCount: number;
     baseballGames?: BaseballGame[];
     commonAnswer?: BaseBallNumber;
-    currentGameIdx?: number;
+    activeGameIdx?: number;
   }) {
     this.maxUserCount = maxUserCount;
     this.baseballGames = baseballGames;
     this.commonAnswer = commonAnswer;
-    this.currentGameIdx = currentGameIdx;
+    this.activeGameIdx = activeGameIdx;
   }
 
   addBaseballGame(username: string): BaseballGameManager {
@@ -42,7 +42,7 @@ export default class BaseballGameManager {
       maxUserCount: this.maxUserCount,
       baseballGames: newBaseBallGames,
       commonAnswer: this.commonAnswer,
-      currentGameIdx: this.currentGameIdx,
+      activeGameIdx: this.activeGameIdx,
     });
   }
 
@@ -57,7 +57,7 @@ export default class BaseballGameManager {
       game.id === id ? newBaseBallGame : game
     );
     const nextGameIdx = this.getNextIdx(
-      this.currentGameIdx,
+      this.activeGameIdx,
       newBaseballGames.length
     );
 
@@ -65,7 +65,7 @@ export default class BaseballGameManager {
       maxUserCount: this.maxUserCount,
       baseballGames: newBaseballGames,
       commonAnswer: this.commonAnswer,
-      currentGameIdx: nextGameIdx,
+      activeGameIdx: nextGameIdx,
     });
   }
 
@@ -97,11 +97,11 @@ export default class BaseballGameManager {
 
   removeBaseballGame(id: string): BaseballGameManager {
     const removeIdx = this.baseballGames.findIndex((game) => game.id === id);
-    let reconciledIdx = this.currentGameIdx;
+    let reconciledIdx = this.activeGameIdx;
     if (removeIdx !== -1) {
       reconciledIdx = this.getReconciledIdx(
         removeIdx,
-        this.currentGameIdx,
+        this.activeGameIdx,
         this.baseballGames.length
       );
     }
@@ -114,16 +114,16 @@ export default class BaseballGameManager {
       maxUserCount: this.maxUserCount,
       baseballGames: newBaseballGames,
       commonAnswer: this.commonAnswer,
-      currentGameIdx: reconciledIdx,
+      activeGameIdx: reconciledIdx,
     });
   }
 
-  isCurrentGame(id: string): boolean {
+  isActiveGame(id: string): boolean {
     const gameIdx = this.baseballGames.findIndex((game) => game.id === id);
     if (gameIdx === -1) {
       throw new Error("게임을 찾을 수 없습니다.");
     }
-    return gameIdx === this.currentGameIdx;
+    return gameIdx === this.activeGameIdx;
   }
 
   getNextIdx(curIdx: number, length: number): number {

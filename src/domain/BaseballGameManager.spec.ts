@@ -94,20 +94,20 @@ describe("BaseballGameManager", () => {
     expect(resetGameManager.baseballGames[1].history.length).toBe(0);
   });
 
-  it("isCurrentGame 메서드 - 현재 게임 확인", () => {
+  it("isActiveGame 메서드 - 현재 게임 확인", () => {
     gameManager = gameManager.addBaseballGame("user1").addBaseballGame("user2");
-    expect(gameManager.isCurrentGame(gameManager.baseballGames[0].id)).toBe(
+    expect(gameManager.isActiveGame(gameManager.baseballGames[0].id)).toBe(
       true
     );
-    expect(gameManager.isCurrentGame(gameManager.baseballGames[1].id)).toBe(
+    expect(gameManager.isActiveGame(gameManager.baseballGames[1].id)).toBe(
       false
     );
 
     gameManager = gameManager.runGame(gameManager.baseballGames[0].id, "135");
-    expect(gameManager.isCurrentGame(gameManager.baseballGames[0].id)).toBe(
+    expect(gameManager.isActiveGame(gameManager.baseballGames[0].id)).toBe(
       false
     );
-    expect(gameManager.isCurrentGame(gameManager.baseballGames[1].id)).toBe(
+    expect(gameManager.isActiveGame(gameManager.baseballGames[1].id)).toBe(
       true
     );
   });

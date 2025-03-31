@@ -15,11 +15,6 @@ const Title = styled.p`
   font-weight: 600;
 `;
 
-const SubTitle = styled.p`
-  font-size: 1.5rem;
-  font-weight: 500;
-`;
-
 const Description = styled.p``;
 const BaseeballGameContainer = styled.div`
   margin-top: 1rem;
@@ -43,7 +38,7 @@ const BaseballPage = ({}: Props) => {
     checkAndAddHistory,
     resetGame,
     isEnd,
-    isCurrentGame,
+    isActiveGame,
     baseballGames,
     isMaxUserCount,
   } = useBaseballGameManager();
@@ -97,7 +92,7 @@ const BaseballPage = ({}: Props) => {
               key={baseballGame.id}
               baseballGame={baseballGame}
               isEnd={isEnd}
-              isActive={isCurrentGame(baseballGame.id)}
+              isActive={isActiveGame(baseballGame.id)}
               onSubmit={handleClickCheckButton}
               onDelete={removeBaseballGame}
             />
