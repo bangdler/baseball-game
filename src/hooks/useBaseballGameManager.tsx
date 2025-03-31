@@ -36,8 +36,6 @@ export const useBaseballGameManager = () => {
     resetGame,
     baseballGames: baseballState.gameManager.baseballGames,
     isEnd: baseballState.gameManager.isEnd(),
-    isMaxUserCount:
-      baseballState.gameManager.baseballGames.length >=
-      baseballState.gameManager.maxUserCount,
+    isMaxUserCount: baseballState.gameManager.isMaxUserCount(),
   };
 };

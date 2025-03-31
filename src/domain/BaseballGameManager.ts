@@ -63,6 +63,10 @@ export default class BaseballGameManager {
     return this.baseballGames.some((game) => game.isEnd());
   }
 
+  isMaxUserCount() {
+    return this.baseballGames.length >= this.maxUserCount;
+  }
+
   reset() {
     const newCommonAnswer = new BaseBallNumber(
       RandomBallCreator.createRandomBalls().join("")
