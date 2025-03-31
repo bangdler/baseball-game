@@ -2,6 +2,7 @@
 import React, { useRef } from "react";
 import styled from "@emotion/styled";
 import { useBaseballGame } from "../../hooks/useBaseballGame";
+import { BaseballGameUtils } from "../../utils/BaseballGameUtils";
 
 const Form = styled.form`
   padding: 1rem;
@@ -55,7 +56,7 @@ const BaseballPage = ({}: Props) => {
       )}
       {history.map((item) => (
         <SubTitle key={item.input.join("")}>
-          {item.input.join("")}: {item.strike}스트라이크 {item.ball}볼
+          {BaseballGameUtils.makeGameResult(item)}
         </SubTitle>
       ))}
       <button onClick={resetGame} disabled={!isEnd}>
