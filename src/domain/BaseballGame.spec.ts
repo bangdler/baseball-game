@@ -5,7 +5,10 @@ describe("BaseballGame", () => {
   let game: BaseballGame;
 
   beforeEach(() => {
-    game = new BaseballGame({ answer: new BaseBallNumber("123") });
+    game = new BaseballGame({
+      username: "test",
+      answer: new BaseBallNumber("123"),
+    });
   });
 
   it("BaseballGame 생성 시 초기값 확인", () => {
@@ -13,13 +16,17 @@ describe("BaseballGame", () => {
     expect(game.answer.numbers).toEqual([1, 2, 3]);
     expect(game.history).toEqual([]);
     expect(game.state).toEqual("PLAYING");
+    expect(game.username).toEqual("test");
   });
 
   it("checkAnswer 메서드 - 정답일 경우 상태 변경", () => {
     game.checkAnswer(new BaseBallNumber("123"));
     expect(game.state).toBe("END");
 
-    game = new BaseballGame({ answer: new BaseBallNumber("123") });
+    game = new BaseballGame({
+      username: "test",
+      answer: new BaseBallNumber("123"),
+    });
     game.checkAnswer(new BaseBallNumber("124"));
     expect(game.state).toBe("PLAYING");
   });

@@ -15,17 +15,22 @@ export interface ICountResult {
 export type TProgress = "PLAYING" | "END";
 
 export default class BaseballGame {
+  id: string = new Date().getTime().toString() + Math.random().toString();
+  username: string;
   answer: BaseBallNumber;
   history: IHistoryItem[];
   state: TProgress = "PLAYING";
 
   constructor({
+    username,
     answer,
     history = [],
   }: {
+    username: string;
     answer: BaseBallNumber;
     history?: IHistoryItem[];
   }) {
+    this.username = username;
     this.answer = answer;
     this.history = history;
   }
@@ -38,6 +43,7 @@ export default class BaseballGame {
       ...countResult,
     });
     const newBaseBallGame = new BaseballGame({
+      username: this.username,
       answer: this.answer,
       history: newHistory,
     });
@@ -79,6 +85,7 @@ export default class BaseballGame {
 
   reset(): BaseballGame {
     return new BaseballGame({
+      username: this.username,
       answer: new BaseBallNumber(
         RandomBallCreator.createRandomBalls().join("")
       ),
