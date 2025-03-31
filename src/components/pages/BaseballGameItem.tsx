@@ -34,6 +34,7 @@ interface Props {
   onSubmit: ({ id, input }: { id: string; input: string }) => void;
   onDelete: (id: string) => void;
   isEnd: boolean;
+  isActive: boolean;
 }
 
 const BaseballGameItem = ({
@@ -41,6 +42,7 @@ const BaseballGameItem = ({
   onSubmit,
   onDelete,
   isEnd,
+  isActive,
 }: Props) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -63,8 +65,8 @@ const BaseballGameItem = ({
       <Description>사용자: {baseballGame.username}</Description>
       <Description>1~9까지의 수를 중복없이 3개 입력해주세요.</Description>
       <div>
-        <input type="text" ref={inputRef} disabled={isEnd} />
-        <button disabled={isEnd}>확인</button>
+        <input type="text" ref={inputRef} disabled={isEnd || !isActive} />
+        <button disabled={isEnd || !isActive}>확인</button>
       </div>
       {!!baseballGame.history.length && (
         <SubTitle>📄 결과 {baseballGame.isEnd() ? "정답" : "오답"}</SubTitle>

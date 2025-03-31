@@ -43,6 +43,7 @@ const BaseballPage = ({}: Props) => {
     checkAndAddHistory,
     resetGame,
     isEnd,
+    isCurrentGame,
     baseballGames,
     isMaxUserCount,
   } = useBaseballGameManager();
@@ -96,6 +97,7 @@ const BaseballPage = ({}: Props) => {
               key={baseballGame.id}
               baseballGame={baseballGame}
               isEnd={isEnd}
+              isActive={isCurrentGame(baseballGame.id)}
               onSubmit={handleClickCheckButton}
               onDelete={removeBaseballGame}
             />

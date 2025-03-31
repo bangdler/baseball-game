@@ -29,6 +29,10 @@ export const useBaseballGameManager = () => {
     });
   };
 
+  const isCurrentGame = (id: string) => {
+    return baseballState.gameManager.isCurrentGame(id);
+  };
+
   return {
     addBaseballGame,
     removeBaseballGame,
@@ -37,5 +41,6 @@ export const useBaseballGameManager = () => {
     baseballGames: baseballState.gameManager.baseballGames,
     isEnd: baseballState.gameManager.isEnd(),
     isMaxUserCount: baseballState.gameManager.isMaxUserCount(),
+    isCurrentGame,
   };
 };
