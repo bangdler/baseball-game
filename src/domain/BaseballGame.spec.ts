@@ -42,7 +42,7 @@ describe("BaseballGame", () => {
   });
 
   it("reset 메서드 - 초기화 확인", () => {
-    const resetGame = game.reset();
+    const resetGame = game.run("456").run("123").reset();
     expect(resetGame).toBeInstanceOf(BaseballGame);
     expect(resetGame.history).toEqual([]);
     expect(resetGame.state).toBe("PLAYING");
