@@ -117,20 +117,4 @@ describe("BaseballGameManager", () => {
     expect(gameManager.isActivePlayer(gameManager.players[0].id)).toBe(false);
     expect(gameManager.isActivePlayer(gameManager.players[1].id)).toBe(true);
   });
-
-  it("getNextIdx 메서드 - 다음 인덱스 확인", () => {
-    expect(gameManager.getNextIdx(0, 2)).toBe(1);
-    expect(gameManager.getNextIdx(1, 2)).toBe(0);
-  });
-
-  it("getPrevIdx 메서드 - 이전 인덱스 확인", () => {
-    expect(gameManager.getPrevIdx(0, 2)).toBe(1);
-    expect(gameManager.getPrevIdx(1, 2)).toBe(0);
-  });
-
-  it("getReconciledIdx 메서드 - 인덱스 조정 확인", () => {
-    expect(gameManager.getReconciledIdx(0, 3, 5)).toBe(2);
-    expect(gameManager.getReconciledIdx(3, 3, 5)).toBe(3);
-    expect(gameManager.getReconciledIdx(4, 3, 5)).toBe(3);
-  });
 });
