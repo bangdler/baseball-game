@@ -50,4 +50,40 @@ describe("BaseBallNumber", () => {
       expect(baseBallNumber.isEqual(baseBallNumber2)).toBe(false);
     }
   );
+
+  const dummys = [
+    {
+      input: "456",
+      result: { strike: 0, ball: 0 },
+    },
+    {
+      input: "145",
+      result: { strike: 1, ball: 0 },
+    },
+    {
+      input: "715",
+      result: { strike: 0, ball: 1 },
+    },
+    {
+      input: "321",
+      result: { strike: 1, ball: 2 },
+    },
+    {
+      input: "312",
+      result: { strike: 0, ball: 3 },
+    },
+    {
+      input: "123",
+      result: { strike: 3, ball: 0 },
+    },
+  ];
+  const answer = new BaseBallNumber("123");
+  it.each(dummys)(
+    "compareTo 메서드 - 스트라이크, 볼 개수 확인. input: $input",
+    (dummy) => {
+      const baseballNumber = new BaseBallNumber(dummy.input);
+      const result = answer.compareTo(baseballNumber);
+      expect(result).toEqual(dummy.result);
+    }
+  );
 });
