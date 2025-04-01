@@ -40,4 +40,22 @@ export default class BaseBallNumber {
   isEqual(input: BaseBallNumber) {
     return this.numbers.every((num, i) => num === input.numbers[i]);
   }
+
+  compareTo(input: BaseBallNumber): { strike: number; ball: number } {
+    let strike = 0;
+    let ball = 0;
+
+    for (let i = 0; i < 3; i++) {
+      if (this.numbers[i] === input.numbers[i]) {
+        strike++;
+      } else if (this.numbers.includes(input.numbers[i])) {
+        ball++;
+      }
+    }
+
+    return {
+      strike,
+      ball,
+    };
+  }
 }
