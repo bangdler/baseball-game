@@ -1,39 +1,62 @@
 "use client";
 import React, { useRef } from "react";
 import styled from "@emotion/styled";
-import { useBaseballGame } from "../../hooks/useBaseballGame";
+
+import { useBaseballGameManager } from "../../hooks/useBaseballGameManager";
 import { BaseballGameUtils } from "../../utils/BaseballGameUtils";
+import BaseballPlayer from "./BaseballPlayer";
 
 const Form = styled.form`
   padding: 1rem;
 `;
 
 const Title = styled.p`
-  font-size: 2rem;
-  font-weight: 700;
-`;
-
-const SubTitle = styled.p`
-  font-size: 1.5rem;
-  font-weight: 500;
+  font-size: 1rem;
+  font-weight: 600;
 `;
 
 const Description = styled.p``;
+const BaseeballGameContainer = styled.div`
+  margin-top: 1rem;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+`;
+
+const BaseballGameList = styled.div`
+  display: flex;
+  gap: 1rem;
+`;
 
 interface Props {}
 
 const BaseballPage = ({}: Props) => {
-  const { checkAndAddHistory, resetGame, history, isEnd } = useBaseballGame();
+  const {
+    addPlayer,
+    removePlayer,
+    runPlayer,
+    resetGame,
+    isEnd,
+    isActivePlayer,
+    players,
+    isMaxPlayerCount,
+    isWinPlayer,
+  } = useBaseballGameManager();
 
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const submitHandler = (e: React.FormEvent) => {
+  const handleSubmitUsername = (e: React.FormEvent) => {
     e.preventDefault();
-    const input = inputRef.current?.value;
-    if (!input) return;
+    const username = inputRef.current?.value;
+    if (!username) return;
+    addPlayer(username);
+    inputRef.current.value = "";
+  };
+
+  const handleClickCheckButton = (input: string) => {
     try {
-      checkAndAddHistory(input);
-      inputRef.current.value = "";
+      runPlayer(input);
     } catch (e: unknown) {
       if (e instanceof Error) {
         alert(e.message);
@@ -44,25 +67,35 @@ const BaseballPage = ({}: Props) => {
   };
 
   return (
-    <Form onSubmit={submitHandler}>
-      <Title>⚾️ 숫자 야구 게임</Title>
-      <Description>1~9까지의 수를 중복없이 3개 입력해주세요.</Description>
-      <div>
-        <input type="text" ref={inputRef} disabled={isEnd} />
-        <button disabled={isEnd}>확인</button>
-      </div>
-      {!!history.length && (
-        <SubTitle>📄 결과 {isEnd ? "정답" : "오답"}</SubTitle>
-      )}
-      {history.map((item) => (
-        <SubTitle key={item.input.join("")}>
-          {BaseballGameUtils.makeGameResult(item)}
-        </SubTitle>
-      ))}
-      <button onClick={resetGame} disabled={!isEnd}>
-        초기화
-      </button>
-    </Form>
+    <>
+      <Form onSubmit={handleSubmitUsername}>
+        <Title>사용자 추가</Title>
+        <Description>사용자를 추가해주세요.</Description>
+        <div>
+          <input type="text" ref={inputRef} disabled={isMaxPlayerCount} />
+          <button disabled={isMaxPlayerCount}>확인</button>
+        </div>
+        <button onClick={resetGame}>전체 초기화</button>
+      </Form>
+      <BaseeballGameContainer>
+        <Description>
+          {BaseballGameUtils.playerListToInfoString(players)}
+        </Description>
+        <BaseballGameList>
+          {players.map((player) => (
+            <BaseballPlayer
+              key={player.id}
+              player={player}
+              isEnd={isEnd}
+              isActive={isActivePlayer(player.id)}
+              isWinPlayer={isWinPlayer(player)}
+              onSubmit={handleClickCheckButton}
+              onDelete={removePlayer}
+            />
+          ))}
+        </BaseballGameList>
+      </BaseeballGameContainer>
+    </>
   );
 };
 
