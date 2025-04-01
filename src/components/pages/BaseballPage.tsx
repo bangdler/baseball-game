@@ -24,7 +24,7 @@ const BaseeballGameContainer = styled.div`
   background-color: #f9f9f9;
 `;
 
-const BaseballGameList = styled.div`
+const PlayerListContainer = styled.div`
   display: flex;
   gap: 1rem;
 `;
@@ -81,7 +81,7 @@ const BaseballPage = ({}: Props) => {
         <Description>
           {BaseballGameUtils.playerListToInfoString(players)}
         </Description>
-        <BaseballGameList>
+        <PlayerListContainer>
           {players.map((player) => (
             <BaseballPlayer
               key={player.id}
@@ -93,7 +93,7 @@ const BaseballPage = ({}: Props) => {
               onDelete={removePlayer}
             />
           ))}
-        </BaseballGameList>
+        </PlayerListContainer>
       </BaseeballGameContainer>
     </>
   );
