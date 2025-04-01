@@ -4,38 +4,38 @@ import { BaseballGamePlayer } from "../domain/BaseballGamePlayer";
 
 export const useBaseballGameManager = () => {
   const [baseballState, setBaseballState] = useRecoilState(BaseBallGameStore);
-  console.log(...baseballState.gameManager.answer.numbers);
+  console.log(...baseballState.game.answer.numbers);
 
   const addPlayer = (username: string) => {
     setBaseballState({
-      gameManager: baseballState.gameManager.addPlayer(username),
+      game: baseballState.game.addPlayer(username),
     });
   };
 
   const runPlayer = (input: string) => {
     setBaseballState({
-      gameManager: baseballState.gameManager.runPlayer(input),
+      game: baseballState.game.runPlayer(input),
     });
   };
 
   const resetGame = () => {
     setBaseballState({
-      gameManager: baseballState.gameManager.reset(),
+      game: baseballState.game.reset(),
     });
   };
 
   const removePlayer = (id: string) => {
     setBaseballState({
-      gameManager: baseballState.gameManager.removePlayer(id),
+      game: baseballState.game.removePlayer(id),
     });
   };
 
   const isActivePlayer = (id: string) => {
-    return baseballState.gameManager.isActivePlayer(id);
+    return baseballState.game.playerManager.isActivePlayer(id);
   };
 
   const isWinPlayer = (player: BaseballGamePlayer) => {
-    return baseballState.gameManager.isWinPlayer(player);
+    return baseballState.game.isWinPlayer(player);
   };
 
   return {
@@ -43,10 +43,10 @@ export const useBaseballGameManager = () => {
     removePlayer,
     runPlayer,
     resetGame,
-    players: baseballState.gameManager.players,
-    isEnd: baseballState.gameManager.isEnd(),
+    players: baseballState.game.playerManager.players,
+    isEnd: baseballState.game.isEnd(),
     isActivePlayer,
-    isMaxPlayerCount: baseballState.gameManager.isMaxPlayerCount(),
+    isMaxPlayerCount: baseballState.game.isMaxPlayerCount(),
     isWinPlayer,
   };
 };

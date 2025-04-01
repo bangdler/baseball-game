@@ -1,16 +1,16 @@
 import { atom } from "recoil";
 import RandomBallCreator from "../domain/RandomBallCreator";
 import BaseBallNumber from "../domain/BaseBallNumber";
-import { BaseballGameManager } from "../domain/BaseballGameManager";
+import { BaseballGame } from "../domain/BaseballGame";
 
 type State = {
-  gameManager: BaseballGameManager;
+  game: BaseballGame;
 };
 
 export const BaseBallGameStore = atom<State>({
   key: "baseBallGame",
   default: {
-    gameManager: new BaseballGameManager({
+    game: new BaseballGame({
       answer: new BaseBallNumber(
         RandomBallCreator.createRandomBalls().join("")
       ),
