@@ -51,7 +51,7 @@ export class BaseballGame {
     if (this.isMaxPlayerCount()) {
       throw new Error("최대 플레이어 수를 초과했습니다.");
     }
-    const newPlayerManager = this.playerManager.addPlayer(name);
+    const newPlayerManager = this.playerManager.add(name);
 
     return new BaseballGame({
       answer: this.answer,
@@ -64,7 +64,7 @@ export class BaseballGame {
   runPlayer(input: string): BaseballGame {
     const baseballNumber = new BaseBallNumber(input);
     const { strike, ball } = this.answer.compareTo(baseballNumber);
-    const newPlayerManager = this.playerManager.updatePlayer({
+    const newPlayerManager = this.playerManager.updateCurrentPlayer({
       baseballNumber,
       strike,
       ball,
@@ -84,7 +84,7 @@ export class BaseballGame {
   }
 
   removePlayer(id: string): BaseballGame {
-    const newPlayerManager = this.playerManager.removePlayer(id);
+    const newPlayerManager = this.playerManager.remove(id);
     const newWinner = this.winner && this.winner.id === id ? null : this.winner;
 
     return new BaseballGame({

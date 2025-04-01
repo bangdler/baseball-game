@@ -20,14 +20,14 @@ export class BaseballGamePlayerManager {
     return this.players[this.activePlayerIdx];
   }
 
-  addPlayer(name: string): BaseballGamePlayerManager {
+  add(name: string): BaseballGamePlayerManager {
     return new BaseballGamePlayerManager({
       players: [...this.players, new BaseballGamePlayer({ name })],
       activePlayerIdx: this.activePlayerIdx,
     });
   }
 
-  updatePlayer(history: IHistoryItem): BaseballGamePlayerManager {
+  updateCurrentPlayer(history: IHistoryItem): BaseballGamePlayerManager {
     const currentPlayer = this.players[this.activePlayerIdx];
     const newPlayer = currentPlayer.addHistory(history);
     const newPlayers = [...this.players];
@@ -44,7 +44,7 @@ export class BaseballGamePlayerManager {
     });
   }
 
-  removePlayer(id: string): BaseballGamePlayerManager {
+  remove(id: string): BaseballGamePlayerManager {
     const removeIdx = this.players.findIndex((player) => player.id === id);
     if (removeIdx === -1) {
       throw new Error("존재하지 않는 플레이어입니다.");
