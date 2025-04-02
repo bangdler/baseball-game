@@ -29,22 +29,10 @@ describe("BaseballGamePlayerManager", () => {
   it("updatePlayer 메서드 - 실행 시 ActiveIdx에 해당하는 Player History 누적", () => {
     playerManager = playerManager.add("user1").add("user2");
     playerManager = playerManager
-      .updateCurrentPlayer({
-        baseballNumber: new BaseBallNumber("123"),
-        strike: 3,
-        ball: 0,
-      })
-      .updateCurrentPlayer({
-        baseballNumber: new BaseBallNumber("456"),
-        strike: 0,
-        ball: 0,
-      });
-    expect(playerManager.players[0].history).toEqual([
-      { baseballNumber: new BaseBallNumber("123"), strike: 3, ball: 0 },
-    ]);
-    expect(playerManager.players[1].history).toEqual([
-      { baseballNumber: new BaseBallNumber("456"), strike: 0, ball: 0 },
-    ]);
+      .updateCurrentPlayer(new BaseBallNumber("123"))
+      .updateCurrentPlayer(new BaseBallNumber("456"));
+    expect(playerManager.players[0].history).toEqual([new BaseBallNumber("123")]);
+    expect(playerManager.players[1].history).toEqual([new BaseBallNumber("456")]);
   });
 
   it("removePlayer 메서드 - 플레이어 삭제 시 players 배열에서 제거", () => {
@@ -64,16 +52,8 @@ describe("BaseballGamePlayerManager", () => {
   it("reset 메서드 - 게임 초기화 확인", () => {
     playerManager = playerManager.add("user1").add("user2");
     playerManager = playerManager
-      .updateCurrentPlayer({
-        baseballNumber: new BaseBallNumber("123"),
-        strike: 3,
-        ball: 0,
-      })
-      .updateCurrentPlayer({
-        baseballNumber: new BaseBallNumber("456"),
-        strike: 0,
-        ball: 0,
-      });
+      .updateCurrentPlayer(new BaseBallNumber("123"))
+      .updateCurrentPlayer(new BaseBallNumber("456"));
     expect(playerManager.players[0].history.length).toBe(1);
     expect(playerManager.players[1].history.length).toBe(1);
     const resetGameManager = playerManager.reset();
@@ -90,11 +70,9 @@ describe("BaseballGamePlayerManager", () => {
       false
     );
 
-    playerManager = playerManager.updateCurrentPlayer({
-      baseballNumber: new BaseBallNumber("123"),
-      strike: 3,
-      ball: 0,
-    });
+    playerManager = playerManager.updateCurrentPlayer(
+      new BaseBallNumber("123")
+    );
     expect(playerManager.isActivePlayer(playerManager.players[0].id)).toBe(
       false
     );

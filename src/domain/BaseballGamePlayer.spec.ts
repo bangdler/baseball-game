@@ -1,4 +1,4 @@
-import { BaseballGamePlayer, IHistoryItem } from "./BaseballGamePlayer";
+import { BaseballGamePlayer } from "./BaseballGamePlayer";
 import BaseBallNumber from "./BaseBallNumber";
 
 describe("BaseballGamePlayer", () => {
@@ -15,9 +15,9 @@ describe("BaseballGamePlayer", () => {
   });
 
   it("addHistory 메서드 - 히스토리 추가", () => {
-    const histories: IHistoryItem[] = [
-      { baseballNumber: new BaseBallNumber("123"), strike: 0, ball: 1 },
-      { baseballNumber: new BaseBallNumber("456"), strike: 1, ball: 2 },
+    const histories: BaseBallNumber[] = [
+      new BaseBallNumber("123"),
+      new BaseBallNumber("456"),
     ];
 
     histories.forEach((history, idx) => {
