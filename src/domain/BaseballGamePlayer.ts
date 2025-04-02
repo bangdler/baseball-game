@@ -12,25 +12,28 @@ export class BaseballGamePlayer {
   history: IHistoryItem[];
 
   constructor({
+    id = new Date().getTime().toString() + Math.random().toString(),
     name,
     history = [],
   }: {
+    id?: string;
     name: string;
     history?: IHistoryItem[];
   }) {
-    this.id = new Date().getTime().toString() + Math.random().toString();
+    this.id = id;
     this.name = name;
     this.history = history;
   }
 
   addHistory(item: IHistoryItem): BaseballGamePlayer {
     return new BaseballGamePlayer({
+      id: this.id,
       name: this.name,
       history: [...this.history, item],
     });
   }
 
   resetHistory(): BaseballGamePlayer {
-    return new BaseballGamePlayer({ name: this.name });
+    return new BaseballGamePlayer({ id: this.id, name: this.name });
   }
 }

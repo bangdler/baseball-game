@@ -59,6 +59,16 @@ describe("BaseballGame", () => {
     expect(game.winner?.name).toBe("user2");
   });
 
+  it("removePlayer 메서드 - 정답자 삭제 시 winner null 처리", () => {
+    game = game.addPlayer("user1").addPlayer("user2");
+    game = game.runPlayer("123");
+    expect(game.winner).not.toBeNull();
+    expect(game.winner?.name).toBe("user1");
+    game = game.removePlayer(game.playerManager.players[0].id);
+    expect(game.playerManager.players.length).toBe(1);
+    expect(game.winner).toBeNull();
+  });
+
   it("reset 메서드 - 게임 초기화 확인", () => {
     game = game.addPlayer("user1").addPlayer("user2");
     game = game.runPlayer("123");
