@@ -17,7 +17,7 @@ export class BaseballGamePlayerManager {
     this.activePlayerIdx = activePlayerIdx;
   }
 
-  getCurrentPlayer(): BaseballGamePlayer {
+  getCurrentPlayer(): BaseballGamePlayer | undefined {
     return this.players[this.activePlayerIdx];
   }
 
@@ -73,6 +73,7 @@ export class BaseballGamePlayerManager {
   }
 
   isActivePlayer(id: string): boolean {
-    return this.getCurrentPlayer().id === id;
+    const curPlayer = this.getCurrentPlayer();
+    return !!curPlayer && curPlayer.id === id;
   }
 }

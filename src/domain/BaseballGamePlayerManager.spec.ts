@@ -31,8 +31,12 @@ describe("BaseballGamePlayerManager", () => {
     playerManager = playerManager
       .updateCurrentPlayer(new BaseBallNumber("123"))
       .updateCurrentPlayer(new BaseBallNumber("456"));
-    expect(playerManager.players[0].history).toEqual([new BaseBallNumber("123")]);
-    expect(playerManager.players[1].history).toEqual([new BaseBallNumber("456")]);
+    expect(playerManager.players[0].history).toEqual([
+      new BaseBallNumber("123"),
+    ]);
+    expect(playerManager.players[1].history).toEqual([
+      new BaseBallNumber("456"),
+    ]);
   });
 
   it("removePlayer 메서드 - 플레이어 삭제 시 players 배열에서 제거", () => {
@@ -63,21 +67,18 @@ describe("BaseballGamePlayerManager", () => {
 
   it("isActivePlayer 메서드 - 현재 플레이어 확인", () => {
     playerManager = playerManager.add("user1").add("user2");
-    expect(playerManager.isActivePlayer(playerManager.players[0].id)).toBe(
-      true
-    );
-    expect(playerManager.isActivePlayer(playerManager.players[1].id)).toBe(
-      false
-    );
+    const ids = playerManager.players.map((player) => player.id);
+    expect(playerManager.isActivePlayer(ids[0])).toBe(true);
+    expect(playerManager.isActivePlayer(ids[1])).toBe(false);
 
     playerManager = playerManager.updateCurrentPlayer(
       new BaseBallNumber("123")
     );
-    expect(playerManager.isActivePlayer(playerManager.players[0].id)).toBe(
-      false
-    );
-    expect(playerManager.isActivePlayer(playerManager.players[1].id)).toBe(
-      true
-    );
+    expect(playerManager.isActivePlayer(ids[0])).toBe(false);
+    expect(playerManager.isActivePlayer(ids[1])).toBe(true);
+
+    playerManager = playerManager.remove(ids[0]).remove(ids[1]);
+    expect(playerManager.isActivePlayer(ids[0])).toBe(false);
+    expect(playerManager.isActivePlayer(ids[1])).toBe(false);
   });
 });
