@@ -33,6 +33,7 @@ interface Props {}
 
 const BaseballPage = ({}: Props) => {
   const {
+    answer,
     addPlayer,
     removePlayer,
     runPlayer,
@@ -85,6 +86,7 @@ const BaseballPage = ({}: Props) => {
           {players.map((player) => (
             <BaseballPlayer
               key={player.id}
+              answer={answer}
               player={player}
               isEnd={isEnd}
               isActive={isActivePlayer(player.id)}

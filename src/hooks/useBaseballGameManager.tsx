@@ -4,7 +4,7 @@ import { BaseballGamePlayer } from "../domain/BaseballGamePlayer";
 
 export const useBaseballGameManager = () => {
   const [baseballState, setBaseballState] = useRecoilState(BaseBallGameStore);
-  console.log(...baseballState.game.answer.numbers);
+  console.log(...baseballState.game.gameController.answer.numbers);
 
   const addPlayer = (username: string) => {
     setBaseballState({
@@ -35,18 +35,21 @@ export const useBaseballGameManager = () => {
   };
 
   const isWinPlayer = (player: BaseballGamePlayer) => {
-    return baseballState.game.isWinPlayer(player);
+    return baseballState.game.gameController.isWinPlayer(player);
   };
 
   return {
+    answer: baseballState.game.gameController.answer,
     addPlayer,
     removePlayer,
     runPlayer,
     resetGame,
     players: baseballState.game.playerManager.players,
-    isEnd: baseballState.game.isEnd(),
+    isEnd: baseballState.game.gameController.isEnd(),
     isActivePlayer,
-    isMaxPlayerCount: baseballState.game.isMaxPlayerCount(),
+    isMaxPlayerCount: baseballState.game.gameController.isMaxPlayerCount(
+      baseballState.game.playerManager.players.length
+    ),
     isWinPlayer,
   };
 };

@@ -3,6 +3,7 @@ import React, { useRef } from "react";
 import styled from "@emotion/styled";
 import { BaseballGameUtils } from "../../utils/BaseballGameUtils";
 import { BaseballGamePlayer } from "../../domain/BaseballGamePlayer";
+import BaseBallNumber from "../../domain/BaseBallNumber";
 
 const Form = styled.form`
   padding: 1rem;
@@ -30,6 +31,7 @@ const Header = styled.div`
 `;
 
 interface Props {
+  answer: BaseBallNumber;
   player: BaseballGamePlayer;
   onSubmit: (input: string) => void;
   onDelete: (id: string) => void;
@@ -39,6 +41,7 @@ interface Props {
 }
 
 const BaseballPlayer = ({
+  answer,
   player,
   onSubmit,
   onDelete,
@@ -74,8 +77,8 @@ const BaseballPlayer = ({
         <SubTitle>📄 결과 {isWinPlayer ? "정답" : "오답"}</SubTitle>
       )}
       {player.history.map((history) => (
-        <SubTitle key={history.baseballNumber.numbers.join("")}>
-          {BaseballGameUtils.historyToResultString(history)}
+        <SubTitle key={history.numbers.join("")}>
+          {BaseballGameUtils.historyToResultString(answer, history)}
         </SubTitle>
       ))}
     </Form>
