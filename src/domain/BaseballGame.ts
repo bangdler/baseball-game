@@ -23,7 +23,7 @@ export class BaseballGame {
     playerManager?: BaseballGamePlayerManager;
     winner?: BaseballGamePlayer | null;
   }) {
-    this.validate(answer, maxPlayerCount, playerManager.players.length);
+    this.validate(maxPlayerCount, playerManager.players.length);
 
     this.answer = answer;
     this.maxPlayerCount = maxPlayerCount;
@@ -31,14 +31,7 @@ export class BaseballGame {
     this.winner = winner;
   }
 
-  validate(
-    answer: BaseBallNumber,
-    maxPlayerCount: number,
-    playerCount: number
-  ) {
-    if (!(answer instanceof BaseBallNumber)) {
-      throw new Error("정답이 BaseballNumber 인스턴스가 아닙니다.");
-    }
+  validate(maxPlayerCount: number, playerCount: number) {
     if (maxPlayerCount <= 0) {
       throw new Error("최대 플레이어수는 0 이하일 수 업습니다.");
     }
