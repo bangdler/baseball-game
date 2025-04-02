@@ -37,10 +37,14 @@ export class BaseballGameController {
         return new BaseballGameController({
           answer: this.answer,
           winner: player,
+          curPlayerCount: this.curPlayerCount,
         });
       }
     }
-    return new BaseballGameController({ answer: this.answer });
+    return new BaseballGameController({
+      answer: this.answer,
+      curPlayerCount: this.curPlayerCount,
+    });
   }
 
   updateCurPlayerCount(count: number): BaseballGameController {
@@ -55,6 +59,7 @@ export class BaseballGameController {
       answer: new BaseBallNumber(
         RandomBallCreator.createRandomBalls().join("")
       ),
+      curPlayerCount: this.curPlayerCount,
     });
   }
 

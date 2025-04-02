@@ -17,7 +17,7 @@ describe("BaseballGameController", () => {
     expect(gameController.winner).toBeNull();
   });
 
-  it("updateWinner 메서드 - 정답자 없는 경우", () => {
+  it("updateWinner 메서드 - 정답자 없는 경우, curPlayrCount 유지", () => {
     const invalidPlayers = [
       new BaseballGamePlayer({
         name: "user1",
@@ -28,11 +28,13 @@ describe("BaseballGameController", () => {
         history: [new BaseBallNumber("492")],
       }),
     ];
+    const curPlayerCount = gameController.curPlayerCount;
     gameController = gameController.updateWinner(invalidPlayers);
     expect(gameController.winner).toBeNull();
+    expect(gameController.curPlayerCount).toEqual(curPlayerCount);
   });
 
-  it("updateWinner 메서드 - 정답자 있는 경우", () => {
+  it("updateWinner 메서드 - 정답자 있는 경우, curPlayrCount 유지", () => {
     const validPlayers = [
       new BaseballGamePlayer({
         name: "user1",
@@ -43,9 +45,12 @@ describe("BaseballGameController", () => {
         history: [new BaseBallNumber("123")],
       }),
     ];
+    const curPlayerCount = gameController.curPlayerCount;
+
     gameController = gameController.updateWinner(validPlayers);
     expect(gameController.winner).not.toBeNull();
     expect(gameController.winner?.name).toBe("user2");
+    expect(gameController.curPlayerCount).toEqual(curPlayerCount);
   });
 
   it("updateCurPlayerCount 메서드 - 정상 경우", () => {
@@ -58,5 +63,26 @@ describe("BaseballGameController", () => {
     expect(() => gameController.updateCurPlayerCount(4)).toThrow(
       "최대 플레이어 수를 초과했습니다."
     );
+  });
+
+  it("reset 시 winner 초기화, curPlayerCount 유지", () => {
+    gameController = gameController.updateCurPlayerCount(3);
+    const validPlayers = [
+      new BaseballGamePlayer({
+        name: "user1",
+        history: [new BaseBallNumber("132"), new BaseBallNumber("456")],
+      }),
+      new BaseballGamePlayer({
+        name: "user2",
+        history: [new BaseBallNumber("123")],
+      }),
+    ];
+
+    gameController = gameController.updateWinner(validPlayers);
+    const curPlayerCount = gameController.curPlayerCount;
+
+    gameController = gameController.reset();
+    expect(gameController.winner).toBeNull();
+    expect(gameController.curPlayerCount).toEqual(curPlayerCount);
   });
 });
