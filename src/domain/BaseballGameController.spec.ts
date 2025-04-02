@@ -17,15 +17,6 @@ describe("BaseballGameController", () => {
     expect(gameController.winner).toBeNull();
   });
 
-  it("checkRule 메서드", () => {
-    expect(() => gameController.checkRule(3)).not.toThrow(
-      "최대 플레이어 수를 초과했습니다."
-    );
-    expect(() => gameController.checkRule(4)).toThrow(
-      "최대 플레이어 수를 초과했습니다."
-    );
-  });
-
   it("updateWinner 메서드 - 정답자 없는 경우", () => {
     const invalidPlayers = [
       new BaseballGamePlayer({
@@ -55,5 +46,17 @@ describe("BaseballGameController", () => {
     gameController = gameController.updateWinner(validPlayers);
     expect(gameController.winner).not.toBeNull();
     expect(gameController.winner?.name).toBe("user2");
+  });
+
+  it("updateCurPlayerCount 메서드 - 정상 경우", () => {
+    expect(() => gameController.updateCurPlayerCount(3)).not.toThrow(
+      "최대 플레이어 수를 초과했습니다."
+    );
+  });
+
+  it("updateCurPlayerCount 메서드 - max값 초과하는 경우", () => {
+    expect(() => gameController.updateCurPlayerCount(4)).toThrow(
+      "최대 플레이어 수를 초과했습니다."
+    );
   });
 });

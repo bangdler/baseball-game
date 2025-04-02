@@ -19,10 +19,11 @@ export class BaseballGame {
 
   addPlayer(name: string): BaseballGame {
     const newPlayerManager = this.playerManager.add(name);
-    this.gameController.checkRule(newPlayerManager.players.length);
-
+    const newGameController = this.gameController.updateCurPlayerCount(
+      newPlayerManager.players.length
+    );
     return new BaseballGame({
-      gameController: this.gameController,
+      gameController: newGameController,
       playerManager: newPlayerManager,
     });
   }
@@ -43,9 +44,9 @@ export class BaseballGame {
 
   removePlayer(id: string): BaseballGame {
     const newPlayerManager = this.playerManager.remove(id);
-    const newGameController = this.gameController.updateWinner(
-      newPlayerManager.players
-    );
+    const newGameController = this.gameController
+      .updateCurPlayerCount(newPlayerManager.players.length)
+      .updateWinner(newPlayerManager.players);
 
     return new BaseballGame({
       gameController: newGameController,

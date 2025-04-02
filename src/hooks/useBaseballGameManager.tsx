@@ -47,9 +47,7 @@ export const useBaseballGameManager = () => {
     players: baseballState.game.playerManager.players,
     isEnd: baseballState.game.gameController.isEnd(),
     isActivePlayer,
-    isMaxPlayerCount: baseballState.game.gameController.isMaxPlayerCount(
-      baseballState.game.playerManager.players.length
-    ),
+    isMaxPlayerCount: baseballState.game.gameController.isMaxPlayerCount(),
     isWinPlayer,
   };
 };
