@@ -1,10 +1,14 @@
-import { BaseballGamePlayer, IHistoryItem } from "../domain/BaseballGamePlayer";
+import { BaseballGamePlayer } from "../domain/BaseballGamePlayer";
+import BaseBallNumber from "../domain/BaseBallNumber";
 
 export class BaseballGameUtils {
-  static historyToResultString(history: IHistoryItem) {
-    const { baseballNumber, strike, ball } = history;
+  static historyToResultString(
+    answer: BaseBallNumber,
+    inputNumber: BaseBallNumber
+  ) {
+    const { strike, ball } = answer.compareTo(inputNumber);
 
-    const inputString = baseballNumber.numbers.join("");
+    const inputString = inputNumber.numbers.join("");
     let resultString;
 
     if (strike === 3) {

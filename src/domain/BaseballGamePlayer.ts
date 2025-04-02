@@ -1,15 +1,10 @@
 import BaseBallNumber from "./BaseBallNumber";
 
-export interface IHistoryItem {
-  baseballNumber: BaseBallNumber;
-  strike: number;
-  ball: number;
-}
 
 export class BaseballGamePlayer {
   id: string;
   name: string;
-  history: IHistoryItem[];
+  history: BaseBallNumber[];
 
   constructor({
     id = new Date().getTime().toString() + Math.random().toString(),
@@ -18,14 +13,14 @@ export class BaseballGamePlayer {
   }: {
     id?: string;
     name: string;
-    history?: IHistoryItem[];
+    history?: BaseBallNumber[];
   }) {
     this.id = id;
     this.name = name;
     this.history = history;
   }
 
-  addHistory(item: IHistoryItem): BaseballGamePlayer {
+  addHistory(item: BaseBallNumber): BaseballGamePlayer {
     return new BaseballGamePlayer({
       id: this.id,
       name: this.name,

@@ -1,5 +1,6 @@
 import { TurnManagementUtils } from "../utils/TurnManagementUtils";
-import { BaseballGamePlayer, IHistoryItem } from "./BaseballGamePlayer";
+import { BaseballGamePlayer } from "./BaseballGamePlayer";
+import BaseBallNumber from "./BaseBallNumber";
 
 export class BaseballGamePlayerManager {
   players: BaseballGamePlayer[];
@@ -27,9 +28,11 @@ export class BaseballGamePlayerManager {
     });
   }
 
-  updateCurrentPlayer(history: IHistoryItem): BaseballGamePlayerManager {
+  updateCurrentPlayer(
+    baseballNumber: BaseBallNumber
+  ): BaseballGamePlayerManager {
     const currentPlayer = this.players[this.activePlayerIdx];
-    const newPlayer = currentPlayer.addHistory(history);
+    const newPlayer = currentPlayer.addHistory(baseballNumber);
     const newPlayers = [...this.players];
     newPlayers[this.activePlayerIdx] = newPlayer;
 
