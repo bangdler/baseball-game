@@ -1,53 +1,54 @@
 import { useRecoilState } from "recoil";
 import { BaseBallGameStore } from "../state/RecoilSampleState";
 import { BaseballGamePlayer } from "../domain/BaseballGamePlayer";
+import { sampleZustandStore } from "../state/ZustandSampleState";
 
 export const useBaseballGameManager = () => {
-  const [baseballState, setBaseballState] = useRecoilState(BaseBallGameStore);
-  console.log(...baseballState.game.gameController.answer.numbers);
+  const { game, setGame } = sampleZustandStore();
+  console.log(...game.gameController.answer.numbers);
 
   const addPlayer = (username: string) => {
-    setBaseballState({
-      game: baseballState.game.addPlayer(username),
+    setGame({
+      game: game.addPlayer(username),
     });
   };
 
   const runPlayer = (input: string) => {
-    setBaseballState({
-      game: baseballState.game.runPlayer(input),
+    setGame({
+      game: game.runPlayer(input),
     });
   };
 
   const resetGame = () => {
-    setBaseballState({
-      game: baseballState.game.reset(),
+    setGame({
+      game: game.reset(),
     });
   };
 
   const removePlayer = (id: string) => {
-    setBaseballState({
-      game: baseballState.game.removePlayer(id),
+    setGame({
+      game: game.removePlayer(id),
     });
   };
 
   const isActivePlayer = (id: string) => {
-    return baseballState.game.playerManager.isActivePlayer(id);
+    return game.playerManager.isActivePlayer(id);
   };
 
   const isWinPlayer = (player: BaseballGamePlayer) => {
-    return baseballState.game.gameController.isWinPlayer(player);
+    return game.gameController.isWinPlayer(player);
   };
 
   return {
-    answer: baseballState.game.gameController.answer,
+    answer: game.gameController.answer,
     addPlayer,
     removePlayer,
     runPlayer,
     resetGame,
-    players: baseballState.game.playerManager.players,
-    isEnd: baseballState.game.gameController.isEnd(),
+    players: game.playerManager.players,
+    isEnd: game.gameController.isEnd(),
     isActivePlayer,
-    isMaxPlayerCount: baseballState.game.gameController.isMaxPlayerCount(),
+    isMaxPlayerCount: game.gameController.isMaxPlayerCount(),
     isWinPlayer,
   };
 };
